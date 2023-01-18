@@ -10,7 +10,7 @@ cityPop <- c(512, 11682, 10180, 6472, 9000, 5000)
 
 # Configuration
 numCities <- length(cityName)
-leadPropRate <- rtri(numCities, min = 2, max = 7, mode = 5.5) * 1000
+leadPropRate <- rtri(numCities, min = 6, max = 15, mode = 12.5) * 1000
 milPropRate <- rtri(numCities, min = 1, max = 3, mode = 2) / 100
 
 # Generate city table
@@ -19,12 +19,13 @@ cityTable <- data.frame(cityName = cityName,
                         cityLeads = 2 + round(cityPop/leadPropRate),
                         cityMil = round(cityPop * milPropRate))
 cityTable
+sum(cityTable$cityLeads)
 
 # Set up alliances table
 set.seed(1) # CTRL+A run to guarantee seed
 
 # Proportion of possible alliances
-propPossAli <- 0.006
+propPossAli <- 0.03
 
 # Generate alliances
 possAliances <- expand.grid(c(LETTERS[1:cityTable$cityLeads[1]]), c(LETTERS[1:cityTable$cityLeads[2]]), c(LETTERS[1:cityTable$cityLeads[3]]),
