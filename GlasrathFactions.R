@@ -1,37 +1,43 @@
 # Generate city military and number of leaders
+
+# Set up city table
 library(EnvStats)
-set.seed(1)
-cityName <- c('Watheton', 'Gorthugke', 'Gamunz', 'Tolfoddund', 'Dwarfs', 'Drows')
+set.seed(1) # CTRL+A run to guarantee seed
+
+# Master data
+cityName <- c('Watheton', 'Gorthugke', 'Gamunz', 'Tolfoddund', 'Nargun', 'Delmuth')
 cityPop <- c(512, 11682, 10180, 6472, 9000, 5000)
 
+# Configuration
 numCities <- length(cityName)
 leadPropRate <- rtri(numCities, min = 2, max = 7, mode = 5.5) * 1000
 milPropRate <- rtri(numCities, min = 1, max = 3, mode = 2) / 100
 
+# Generate city table
 cityTable <- data.frame(cityName = cityName,
                         cityPop = cityPop,
                         cityLeads = 2 + round(cityPop/leadPropRate),
                         cityMil = round(cityPop * milPropRate))
 cityTable
 
-#######
-propPossAli <- 0.006
-set.seed(1)
+# Set up alliances table
+set.seed(1) # CTRL+A run to guarantee seed
 
+# Proportion of possible alliances
+propPossAli <- 0.006
+
+# Generate alliances
 possAliances <- expand.grid(c(LETTERS[1:cityTable$cityLeads[1]]), c(LETTERS[1:cityTable$cityLeads[2]]), c(LETTERS[1:cityTable$cityLeads[3]]),
                             c(LETTERS[1:cityTable$cityLeads[4]]), c(LETTERS[1:cityTable$cityLeads[5]]), c(LETTERS[1:cityTable$cityLeads[6]]))
 names(possAliances) <- cityTable$cityName
 possAliances$alianceCode <- sample(nrow(possAliances), nrow(possAliances), replace = FALSE)
 possAliances$alianceReached <- ifelse(possAliances$alianceCode/nrow(possAliances) < propPossAli, TRUE, FALSE)
 
-# how can we make cases where it is yes, if....
-
-# sum(possAliances$alianceReached)
-
+# Summarise alliances that can be reached
 alianceReached <- possAliances[possAliances$alianceReached, 1:6]
-
 summary(alianceReached)
 
+# Create look up for DM
 alianceReachedPerFact <- lapply(1:length(cityTable$cityName), function(i) {
   collect <- lapply(unique(alianceReached[, i]), function (x) {
     summary(alianceReached[alianceReached[, i] == x, -i])
@@ -40,32 +46,4 @@ alianceReachedPerFact <- lapply(1:length(cityTable$cityName), function(i) {
   collect
 })
 names(alianceReachedPerFact) <- cityTable$cityName
-
-
-# c('religious', 'political', 'military', 'arcane', 'racial')
-
-
-# another alliance style (more principled)
-
-
-
-
-leadLetter <- lapply(1:nrow(cityTable), function(i) {
-  LETTERS[1:cityTable$cityLeads[i]]
-})
-names(leadLetter) <- cityTable$cityName
-
-
-lapply(leadLetter[[i]], function(j) {
-  
-})
-
-
-j=1
-leadLetter[j]
-
-
-alianceReached
-
-
-
+alianceReachedPerFact
