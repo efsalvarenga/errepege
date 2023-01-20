@@ -36,20 +36,37 @@ names(techForward) <- techTable$tech_name
 
 # simulation starting settings
 
-totResources <- 10000    # 219945 enables total development
+totResources <- 2500    # 219945 enables total development
 resources <- totResources
 depdTechs <- 'agriculture'
 
-# simulation run
-while(resources > 0 && length(depdTechs) < nrow(techTable)) {
-  altDevs <- techForward[techTable$tech_name %in% depdTechs] %>%
-    unlist() %>%
-    as.character()
-  altDevs <- altDevs[!(altDevs %in% depdTechs)]
-  choiceDev <- sample(altDevs, 1)
-  resources <- resources - techTree[[choiceDev]]$cost
-  depdTechs <- c(depdTechs, choiceDev)
+# simulation function
+createTechDevPath <- function (totResources, depdTechs) {
+  resources <- totResources
+  while(resources > 0 && length(depdTechs) < nrow(techTable)) {
+    altDevs <- techForward[techTable$tech_name %in% depdTechs] %>%
+      unlist() %>%
+      as.character()
+    altDevs <- altDevs[!(altDevs %in% depdTechs)]
+    choiceDev <- sample(altDevs, 1)
+    resources <- resources - techTree[[choiceDev]]$cost
+    depdTechs <- c(depdTechs, choiceDev)
+  }
+  result <- list(depdTechs, resources)
+  names(result) <- c('developedTechs', 'resourcesLeft')
+  return (result)
 }
+
 
 dvpdTable <- techTable[techTable$tech_name %in% depdTechs, ]
 
+# analysis
+costPerEra <- techTable %>%
+  group_by(era) %>%
+  summarise(totCost = sum(cost)) %>%
+  arrange(totCost)
+costPerEra$yearsInEra <- c(3000, 1500, 850, 375, 165, 55, 50, 25)
+costPerEra$progrPerYear <- costPerEra$totCost / costPerEra$yearsInEra
+
+set.seed(1)
+createTechDevPath(2500, 'agriculture')
