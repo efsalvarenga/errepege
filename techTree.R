@@ -2,9 +2,10 @@ library(rjson)
 library(dplyr)
 library(stringr)
 
+# import data
 techTree <- fromJSON(file = "civTechTree.json")
 
-# data cleaning
+# clean data
 techTree <- lapply(techTree, function(tech) {
   if (str_detect(tech$tech_name, '\\(')) {
     tech$tech_name <- sub(" \\(Civ5)", "", tech$tech_name)
@@ -21,46 +22,9 @@ techTable <- lapply(techTree, function(tech) {
              units = toString(tech$units_enabled))
 })
 techTable <- do.call(rbind, techTable)
-
-# give the tree nice names
 names(techTree) <- techTable$tech_name
 
-# create list with options for further development
-techForward <- lapply(techTree, function(tech) {
-  str_to_lower(tech$leads_to)
-  # df <- data.frame(tech_name = str_to_lower(tech$leads_to))
-  # tech_id <- left_join(df, techTable, by = 'tech_name')[['tech_id']]
-  # return (tech_id)
-})
-names(techForward) <- techTable$tech_name
-
-# simulation starting settings
-
-totResources <- 2500    # 219945 enables total development
-resources <- totResources
-depdTechs <- 'agriculture'
-
-# simulation function
-createTechDevPath <- function (totResources, depdTechs) {
-  resources <- totResources
-  while(resources > 0 && length(depdTechs) < nrow(techTable)) {
-    altDevs <- techForward[techTable$tech_name %in% depdTechs] %>%
-      unlist() %>%
-      as.character()
-    altDevs <- altDevs[!(altDevs %in% depdTechs)]
-    choiceDev <- sample(altDevs, 1)
-    resources <- resources - techTree[[choiceDev]]$cost
-    depdTechs <- c(depdTechs, choiceDev)
-  }
-  result <- list(depdTechs, resources)
-  names(result) <- c('developedTechs', 'resourcesLeft')
-  return (result)
-}
-
-
-dvpdTable <- techTable[techTable$tech_name %in% depdTechs, ]
-
-# analysis
+# summarise cost per era, and calculate yearly costs per era
 costPerEra <- techTable %>%
   group_by(era) %>%
   summarise(totCost = sum(cost)) %>%
@@ -68,5 +32,65 @@ costPerEra <- techTable %>%
 costPerEra$yearsInEra <- c(3000, 1500, 850, 375, 165, 55, 50, 25)
 costPerEra$progrPerYear <- costPerEra$totCost / costPerEra$yearsInEra
 
+# create list with options for further development
+techForward <- lapply(techTree, function(tech) {
+  str_to_lower(tech$leads_to)
+})
+names(techForward) <- techTable$tech_name
+
+# create list with requirements per technology
+techBackward <- lapply(techTree, function(tech) {
+  str_to_lower(tech$required_techs)
+})
+names(techBackward) <- techTable$tech_name
+
+# simulation function
+createTechDevPath <- function (totResources = 219945, dvpdTechs) {
+  # start with initial resources
+  resources <- totResources
+  
+  # cycle until resources are not negative to develop and not all techs are
+  # developed - it might be that in the end it will be negative resources
+  while(resources > 0 && length(dvpdTechs) < nrow(techTable)) {
+
+    # check what are the options for development, without filter
+    altDevs <- techForward[techTable$tech_name %in% dvpdTechs] %>%
+      unlist() %>%
+      as.character()
+    
+    # filter options for development that are already developed
+    altDevs <- altDevs[!(altDevs %in% dvpdTechs)]
+    
+    # identify which options for development are blocked due to required tech
+    blocking <- lapply(altDevs, function(tech) {
+      if (any(!techBackward[[tech]] %in% dvpdTechs)) {
+        return ('blocked')
+      } else {
+        return ('unblocked')
+      }
+    }) %>% unlist()
+    
+    # keep only unblocked options
+    altDevs <- altDevs[blocking == 'unblocked']
+    
+    # choose randomly a new tech
+    choiceDev <- sample(altDevs, 1)
+    
+    # update resorces
+    resources <- resources - techTree[[choiceDev]]$cost
+    
+    # add new technology to developed list
+    dvpdTechs <- c(dvpdTechs, choiceDev)
+  }
+  
+  # create results for function
+  dvpdTable <- techTable[techTable$tech_name %in% dvpdTechs, ]
+  result <- list(dvpdTechs, resources, dvpdTable)
+  names(result) <- c('dvpdTechs', 'resourcesLeft', 'dvpdTable')
+  
+  return (result)
+}
+
+
 set.seed(1)
-createTechDevPath(2500, 'agriculture')
+createTechDevPath(400, 'agriculture') # compass should not be created
