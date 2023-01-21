@@ -1,0 +1,52 @@
+{
+  "kuzar": {
+    "dvpdOrder": ["agriculture", "pottery", "animal husbandry", "archery", "mining", "sailing", "optics", "calendar", "writing", "philosophy"],
+    "unitsAvailable": ["Worker, Settler, Warrior, Scout, Atlatlist, Jaguar, Maori warrior, Pathfinder, , , , Work boat, Trireme, Dromon, Quinquereme, Cargo ship, , , , Caravan, Archer, Bowman, Slinger"],
+    "resourcesLeft": [-165],
+    "totResources": [420],
+    "dvpdTechsIni": ["agriculture"],
+    "currentYear": [3877],
+    "currentDevDevRate": [4],
+    "seed": [1]
+  },
+  "acrisae": {
+    "dvpdOrder": ["agriculture", "archery", "mining", "masonry", "bronze working", "iron working", "pottery", "calendar", "writing", "drama and poetry", "sailing", "optics", "philosophy", "theology", "compass", "animal husbandry", "the wheel", "construction", "mathematics", "engineering", "metal casting", "steel", "trapping", "horseback riding", "currency", "civil service", "education", "astronomy", "acoustics", "guilds", "chivalry", "banking", "architecture", "physics", "machinery"],
+    "unitsAvailable": ["Worker, Settler, Warrior, Scout, Atlatlist, Jaguar, Maori warrior, Pathfinder, , Caravel, Turtle ship, Nau, , Longswordsman, Samurai, , Trebuchet, Hwach'a, , , Crossbowman, Longbowman, Chu-ko-nu, Galleass, Great galleass, Knight, Camel archer, Naresuan's elephant, Mandekalu cavalry, Keshik, Conquistador, , , Catapult, Ballista, Siege tower, Berserker, , , Pikeman, Landsknecht, , , Composite bowman, Work boat, Trireme, Dromon, Quinquereme, Cargo ship, , , , Swordsman, Mohawk warrior, Legion, Kris Swordsman, Horseman, Companion cavalry, Cataphract, African forest elephant, Chariot archer, War chariot, War elephant, Horse archer, , , , Spearman, Hoplite, Immortal, Pictish warrior, Battering ram, Caravan, Archer, Bowman, Slinger"],
+    "resourcesLeft": [-230],
+    "totResources": [9000],
+    "dvpdTechsIni": ["agriculture"],
+    "currentYear": [3877],
+    "currentDevDevRate": [40],
+    "seed": [9]
+  },
+  "nurderad": {
+    "dvpdOrder": ["agriculture", "pottery", "animal husbandry", "archery", "mining", "sailing", "optics", "trapping", "the wheel", "bronze working", "horseback riding", "iron working"],
+    "unitsAvailable": ["Worker, Settler, Warrior, Scout, Atlatlist, Jaguar, Maori warrior, Pathfinder, , , Work boat, Trireme, Dromon, Quinquereme, Cargo ship, , , Swordsman, Mohawk warrior, Legion, Kris Swordsman, Horseman, Companion cavalry, Cataphract, African forest elephant, Chariot archer, War chariot, War elephant, Horse archer, Spearman, Hoplite, Immortal, Pictish warrior, Battering ram, Caravan, Archer, Bowman, Slinger"],
+    "resourcesLeft": [-115],
+    "totResources": [650],
+    "dvpdTechsIni": ["agriculture", "pottery", "animal husbandry", "archery", "mining", "sailing", "optics"],
+    "currentYear": [3877],
+    "currentDevDevRate": [6],
+    "seed": [3]
+  },
+  "tolfoddund": {
+    "dvpdOrder": ["agriculture", "pottery", "animal husbandry", "archery", "mining", "sailing", "optics", "calendar", "writing", "philosophy"],
+    "unitsAvailable": ["Worker, Settler, Warrior, Scout, Atlatlist, Jaguar, Maori warrior, Pathfinder, , , , Work boat, Trireme, Dromon, Quinquereme, Cargo ship, , , , Caravan, Archer, Bowman, Slinger"],
+    "resourcesLeft": [-165],
+    "totResources": [420],
+    "dvpdTechsIni": ["agriculture", "pottery", "animal husbandry", "archery", "mining"],
+    "currentYear": [3877],
+    "currentDevDevRate": [4],
+    "seed": [1]
+  },
+  "kostoch": {
+    "dvpdOrder": ["agriculture", "pottery", "animal husbandry", "archery", "mining", "sailing", "optics", "calendar", "writing", "philosophy"],
+    "unitsAvailable": ["Worker, Settler, Warrior, Scout, Atlatlist, Jaguar, Maori warrior, Pathfinder, , , , Work boat, Trireme, Dromon, Quinquereme, Cargo ship, , , , Caravan, Archer, Bowman, Slinger"],
+    "resourcesLeft": [-115],
+    "totResources": [470],
+    "dvpdTechsIni": ["agriculture", "pottery", "animal husbandry", "archery", "mining"],
+    "currentYear": [3877],
+    "currentDevDevRate": [4.2],
+    "seed": [1]
+  }
+}

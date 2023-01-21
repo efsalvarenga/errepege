@@ -1,9 +1,10 @@
 library(rjson)
 library(dplyr)
 library(stringr)
+library(jsonlite)
 
 # import data
-techTree <- fromJSON(file = "civTechTree.json")
+techTree <- rjson::fromJSON(file = "civTechTree.json")
 
 # clean data
 techTree <- lapply(techTree, function(tech) {
@@ -45,9 +46,15 @@ techBackward <- lapply(techTree, function(tech) {
 names(techBackward) <- techTable$tech_name
 
 # simulation function
-createTechDevPath <- function (totResources = 219945, dvpdTechs) {
+createTechDevPath <- function (totResources = 219945, dvpdTechs,
+                               currentYear = 3877, currentDevDevRate = 4.5,
+                               seed = 1) {
   # start with initial resources
-  resources <- totResources
+  iniCosts <- sum(techTable[techTable$tech_name %in% dvpdTechs, ]$cost)
+  resources <- totResources - iniCosts
+  
+  # store initial dvpdTechs
+  dvpdTechsIni <- dvpdTechs
   
   # cycle until resources are not negative to develop and not all techs are
   # developed - it might be that in the end it will be negative resources
@@ -74,6 +81,7 @@ createTechDevPath <- function (totResources = 219945, dvpdTechs) {
     altDevs <- altDevs[blocking == 'unblocked']
     
     # choose randomly a new tech
+    set.seed(seed)
     choiceDev <- sample(altDevs, 1)
     
     # update resorces
@@ -84,13 +92,68 @@ createTechDevPath <- function (totResources = 219945, dvpdTechs) {
   }
   
   # create results for function
-  dvpdTable <- techTable[techTable$tech_name %in% dvpdTechs, ]
-  result <- list(dvpdTechs, resources, dvpdTable)
-  names(result) <- c('dvpdTechs', 'resourcesLeft', 'dvpdTable')
+  unitsAvailable <- techTable[techTable$tech_name %in% dvpdTechs, ]$units
+  unitsAvailable <- toString(unitsAvailable[runSim$unitsAvailable != ''])
+  result <- list(dvpdTechs, unitsAvailable, resources,
+                 totResources, dvpdTechsIni, currentYear,
+                 currentDevDevRate, seed)
+  names(result) <- c('dvpdOrder', 'unitsAvailable', 'resourcesLeft',
+                     'totResources', 'dvpdTechsIni', 'currentYear',
+                     'currentDevDevRate', 'seed')
   
   return (result)
 }
 
+showTechTable <- function (civName) {
+  techs <- simList[[civName]]$dvpdOrder
+  table <- techTable[techTable$tech_name %in% techs, ] %>%
+    arrange(cost)
+  return (table)
+}
 
-set.seed(1)
-createTechDevPath(400, 'agriculture') # compass should not be created
+relatedDev <- function (relCiv, relRate = 0.7) {
+  forkPoint <- floor(length(simList[[relCiv]]$dvpdOrder) * relRate)
+  return (simList[[relCiv]]$dvpdOrder[1:forkPoint])
+}
+
+# technology development simulation
+
+# import existing technology development simulation
+simList <- rjson::fromJSON(file = "simList.json")
+
+# simulation settings
+reRunExisting <- FALSE
+
+names(simList)
+
+if (FALSE) {
+  simList$kuzar <- createTechDevPath(420,
+                                     dvpdTechs = 'agriculture',
+                                     currentDevDevRate = 4, seed = 1)
+  simList$acrisae <- createTechDevPath(9000,
+                                       dvpdTechs = 'agriculture',
+                                       currentDevDevRate = 40, seed = 9)
+  simList$nurderad <- createTechDevPath(650,
+                                        dvpdTechs = relatedDev('kuzar', 0.7),
+                                        currentDevDevRate = 6, seed = 3)
+  simList$tolfoddund <- createTechDevPath(420,
+                                          dvpdTechs = relatedDev('kuzar', 0.5),
+                                          currentDevDevRate = 4, seed = 1)
+  
+  simList$kostoch <- createTechDevPath(470,
+                                       dvpdTechs = relatedDev('kuzar', 0.5),
+                                       currentDevDevRate = 4.2, seed = 1)
+}
+
+simTable <- lapply(names(simList), function (civ) {
+  data.frame(civ = civ,
+             showTechTable(civ))
+}) %>% bind_rows()
+
+
+if (FALSE) {
+  simListJSON <- jsonlite::toJSON(simList, pretty = TRUE)
+  write(simListJSON, file = 'simList.json')
+  
+  write.csv(simTable, 'simTable.csv')
+}
