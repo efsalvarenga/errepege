@@ -18,6 +18,8 @@ cityTable <- data.frame(cityName = cityName,
                         cityPop = cityPop,
                         cityLeads = 2 + round(cityPop/leadPropRate),
                         cityMil = round(cityPop * milPropRate))
+cityTable$survivors <- round(cityTable$cityPop * rtri(numCities, min = 0.15,
+                                                      max = 0.45, mode = 0.35))
 cityTable
 sum(cityTable$cityLeads)
 
