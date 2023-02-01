@@ -1,4 +1,3 @@
-library(dplyr)
 
 # pcs side set-up
 pcs <- list(
@@ -16,41 +15,47 @@ pcs <- list(
 npcs <- list(
   skeleton = list(toHit = 4,
                   dmg = c(3:8),
-                  number = 5,
-                  condition = 'n'),
+                  number = 50,
+                  condition = 1),
   zombie = list(toHit = 3,
                 dmg = c(2:7),
                 number = 0,
-                condition = 'n')
+                condition = 1)
 )
+
+# rolls: E(d20D) = 7.2; E(d20) = 10.5; E(d20A) = 13.8
+# condition: a = 1.3; n = 1; d = 0.7
 
 # attack
 atckRolls <- lapply(names(npcs), function (name) {
   # attack rolls and choice of targets (all random)
-  browser()
-  case_when()
-  
-  roll = sample(1:20, npcs[[name]]$number, replace = T) + npcs[[name]]$toHit
+  roll = sample(1:20, npcs[[name]]$number, replace = T)
+  # roll[4] = 20
+  criticals <- which(roll == 20)
+  # browser()
+  roll = roll * npcs[[name]]$condition + npcs[[name]]$toHit
   tgts = sample(names(pcs), npcs[[name]]$number, replace = T)
   
   # resolving rolls and damage
   tgts_ac <- sapply(tgts, function (tgt) { pcs[[tgt]]$ac })
   outcome = roll > tgts_ac
-  dmgs <- outcome[outcome]
-  dmgs[dmgs] <- sample(npcs[[name]]$dmg, sum(outcome), replace = T)
+  outcome[criticals] <- TRUE
+  
+  # dmgs <- outcome[outcome]
+  dmgs <- outcome * 1
+  dmgs[criticals] <- 1.5
+  dmgs <- sample(npcs[[name]]$dmg, npcs[[name]]$number, replace = T) * dmgs
+  dmgs <- round(dmgs)
+  
+  
   
   # summarised outcome
-  return( dmgs )
+  return( list(dmgs, criticals) )
 })
 names(atckRolls) <- names(npcs)
 atckRolls
 
 
-
-tgtDC <- 15
-nRoll <- 500
-rollB <- mean(c(3, 4))
-unitD <- sample(1:6, nRoll, replace = T) + 2
-
-sccs <- round((20 - (tgtDC - rollB)) / 20 * nRoll, digits = 0)
-totD <- sum(sample(unitD, sccs, replace = F))
+# To-do
+# criticals
+# multi attacks

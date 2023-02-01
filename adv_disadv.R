@@ -17,3 +17,7 @@ mean(a1 + a2)
 mean(b)
 
 mean(a1 + a2)/mean(b)
+
+
+
+mean(sample(2:12, 10000, replace = T)) / mean(sample(1:6, 10000, replace = T))
