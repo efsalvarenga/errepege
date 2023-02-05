@@ -15,12 +15,13 @@ source('./combat/fx_attackRolls.R')
 
 # load JSON data
 # condition: E(d20D) = 7.2 (0.7x); E(d20) = 10.5 (1x); E(d20A) = 13.8 (1.3x)
-npcsDf <- fx_convListDF(rjson::fromJSON(file = './combat/GlasrathUchbur.json'))
-pcsDf <- fx_convListDF(rjson::fromJSON(file = './combat/GlasrathPCs.json'))
+npcsDf <- fx_convListDF(rjson::fromJSON(file = './combat/Glasrath_Uchbur.json'))
+pcsDf <- fx_convListDF(rjson::fromJSON(file = './combat/Glasrath_Alliance.json'))
 
 # set up simulation
 runRound <- TRUE
-expSims <- 100
+expSims <- 1
+stopCond <- 10
 
 # first print
 npcsDf
@@ -66,6 +67,6 @@ while (runRound) {
   print(pcsDf)
   
   # check if while-loops continues
-  runRound <- sum(npcsDf$number) > 5 & sum(pcsDf$number) > 5
+  runRound <- sum(npcsDf$number) > stopCond & sum(pcsDf$number) > stopCond
   print(runRound)
 }

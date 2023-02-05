@@ -20,7 +20,7 @@ fx_convListDF <- function (list) {
 
 
 # main attack roll function
-fx_attackRolls2 <- function(atck, dfnd, seed = NULL,
+fx_attackRolls <- function(atck, dfnd, seed = NULL,
                             maxAtckMult = 6,
                             output = c('detail', 'summary',
                                        'wardetail', 'warsummary')) {
@@ -215,7 +215,7 @@ fxW_aR_expectationRuns <- function(atck, dfnd, maxAtckMult = 6,
   
   # run multiple single round
   atcks <- lapply(1:rounds, function(x) {
-    fx_attackRolls2(atck = atck, dfnd = dfnd, maxAtckMult = maxAtckMult,
+    fx_attackRolls(atck = atck, dfnd = dfnd, maxAtckMult = maxAtckMult,
                     seed = NULL, output = 'warsummary')
   }) %>% bind_rows()
   
