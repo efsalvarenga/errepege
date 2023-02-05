@@ -1,0 +1,42 @@
+{
+  "skeleton": {
+    "ac": [13],
+    "hp": [13],
+    "toHit": [4],
+    "minDmg": [3],
+    "maxDmg": [8],
+    "atkn": [1],
+    "number": [2],
+    "condition": [1.1]
+  },
+  "zombie": {
+    "ac": [8],
+    "hp": [22],
+    "toHit": [3],
+    "minDmg": [2],
+    "maxDmg": [7],
+    "atkn": [1],
+    "number": [2],
+    "condition": [1.1]
+  },
+  "skullComm": {
+    "ac": [18],
+    "hp": [102],
+    "toHit": [7],
+    "minDmg": [8],
+    "maxDmg": [15],
+    "atkn": [2],
+    "number": [1],
+    "condition": [1]
+  },
+  "lizardUndead": {
+    "ac": [14],
+    "hp": [66],
+    "toHit": [7],
+    "minDmg": [7],
+    "maxDmg": [25],
+    "atkn": [2],
+    "number": [1],
+    "condition": [1.1]
+  }
+}

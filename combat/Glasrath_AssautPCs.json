@@ -1,0 +1,72 @@
+{
+  "GhuseFightersL3": {
+    "ac": [19],
+    "hp": [28],
+    "toHit": [5],
+    "minDmg": [4],
+    "maxDmg": [13],
+    "atkn": [1],
+    "number": [4],
+    "condition": [1]
+  },
+  "KiranuDwarves": {
+    "ac": [18],
+    "hp": [24],
+    "toHit": [4],
+    "minDmg": [3],
+    "maxDmg": [10],
+    "atkn": [1],
+    "number": [2],
+    "condition": [1]
+  },
+  "Dolman": {
+    "ac": [16],
+    "hp": [20],
+    "toHit": [5],
+    "minDmg": [4],
+    "maxDmg": [15],
+    "atkn": [1],
+    "number": [1],
+    "condition": [1]
+  },
+  "Fuko": {
+    "ac": [12],
+    "hp": [14],
+    "toHit": [4],
+    "minDmg": [3],
+    "maxDmg": [6],
+    "atkn": [1],
+    "number": [1],
+    "condition": [1]
+  },
+  "Guilf": {
+    "ac": [14],
+    "hp": [18],
+    "toHit": [5],
+    "minDmg": [4],
+    "maxDmg": [11],
+    "atkn": [1],
+    "number": [1],
+    "condition": [1]
+  },
+  "Kethra": {
+    "ac": [10],
+    "hp": [20],
+    "toHit": [2],
+    "minDmg": [1],
+    "maxDmg": [4],
+    "atkn": [1],
+    "number": [1],
+    "condition": [1]
+  },
+  "Wyvern": {
+    "ac": [13],
+    "hp": [15],
+    "toHit": [4],
+    "minDmg": [3],
+    "maxDmg": [10],
+    "atkn": [1],
+    "number": [1],
+    "condition": [1]
+  }
+}
