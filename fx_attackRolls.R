@@ -1,28 +1,69 @@
-library(dplyr)
+# =========================================================================== #
+#                            LIBRARIES AND SET UP                             #
+# =========================================================================== #
 
-# defining function
-fx_attackRolls <- function(atck, dfnd, seed = NULL,
-                           output = c('detail', 'summary', 'war')) {
+library(dplyr)
+library(rjson)
+
+options(dplyr.summarise.inform = FALSE)
+
+
+# =========================================================================== #
+#                            FUNCTIONS BLOCK                                  #
+# =========================================================================== #
+
+# function to convert a character set (in a list/JSON list) to a data frame
+fx_convListDF <- function (list) {
+  lapply(names(list), function (name) {
+    bind_cols(name = name,
+              as.data.frame(list[[name]]))
+  }) %>% bind_rows
+}
+# ----------------------------------------------------------------------------#
+
+
+# main attack roll function
+fx_attackRolls2 <- function(atck, dfnd, seed = NULL,
+                            maxAtckMult = 6,
+                            output = c('detail', 'summary',
+                                       'wardetail', 'warsummary')) {
   
+  # set seed if requested by argument
   if (!is.null(seed)) { set.seed(seed) }
   
   # attack roll
-  atckRolls <- lapply(names(atck), function (name) {
-    # attack rolls and choice of targets (all random)
-    roll = sample(1:20, atck[[name]]$number, replace = T)
-    criticals <- roll == 20
-    roll = roll * atck[[name]]$condition + atck[[name]]$toHit
-    tgts = sample(names(dfnd), atck[[name]]$number, replace = T)
+  atckRolls <- lapply(atck$name, function (name) {
     
-    # resolving rolls
-    tgts_ac <- sapply(tgts, function (tgt) { dfnd[[tgt]]$ac })
+    # filtering to appropriate line on DF
+    atck1 <- atck[atck$name == name, ]
+    
+    # determining number of attacks to be made
+    numberAttacks <- atck1$number * atck1$atkn
+    
+    # attack rolls (all random)
+    roll = sample(1:20, numberAttacks, replace = T)
+    criticals <- roll == 20
+    roll = roll * atck1$condition + atck1$toHit
+    
+    # target probability is defined based on highest damage of creature and
+    # number of creatures (root of multiplication of variables)
+    tgtProb <- sapply(dfnd$name, function (x) {
+      dfnd1 <- dfnd[dfnd$name == x, ]
+      sqrt(dfnd1$number * dfnd1$maxDmg) # focus attacks on strong enemies
+      #dfnd1$number
+    })
+    tgts = sample(dfnd$name, numberAttacks, replace = T, prob = tgtProb)
+    
+    # resolving rolls based on targets
+    tgts_ac <- sapply(tgts, function (tgt) { dfnd[dfnd$name == tgt, 'ac'] })
     outcome = roll > tgts_ac
     outcome[criticals] <- TRUE
     
-    # calculating damage
+    # calculating damages
     dmgs <- outcome * 1
     dmgs[criticals] <- 1.5
-    dmgs <- sample(atck[[name]]$dmg, atck[[name]]$number, replace = T) * dmgs
+    dmgs <- dmgs * sample(atck1$minDmg:atck1$maxDmg,
+                          numberAttacks, replace = T)
     dmgs <- round(dmgs)
     
     # preparing outcome data
@@ -31,136 +72,226 @@ fx_attackRolls <- function(atck, dfnd, seed = NULL,
     
     return(data.frame(tgt = names(dmgs),
                       dmg = dmgs,
-                      hit = hit))
+                      hit = hit,
+                      row.names = NULL))
   })
   # improve naming
-  names(atckRolls) <- names(atck)
+  names(atckRolls) <- atck$name
   
+  # applying confusion when multiple attacks with same targets
+  atckRolls <- fxH_aR_confusion(atck, dfnd, atckRolls, maxAtckMult)
+  
+  # output depends on requested detail level
+  # 'detail', 'summary', 'wardetail', 'warsummary'
   if (output == 'detail') {
     return (atckRolls)
   } else {
-    # summarised results
-    atckRollsS <- lapply(names(atck), function (name) {
-      # skiping empty tables
-      if (nrow(atckRolls[[name]]) == 0) { return (NA) }
-      
-      # summarising
-      atckSumm <- atckRolls[[name]] %>%
-        group_by(tgt, hit) %>%
-        summarise(count = n(),
-                  total = sum(dmg))
-      
-      return (atckSumm)
-    })
-    # improve naming
-    names(atckRollsS) <- names(atck)
+    atckRollsS <- fxH_aR_summary(atck, atckRolls)
     
     if (output == 'summary') {
       return (atckRollsS)
     } else {
-      # war summary
-      atckRollsW <- lapply(names(atck), function (name) {
-        # skiping empty tables
-        if (nrow(atckRollsS[[name]]) == 0) {
-          return (NA)
+      atckRollsW <- fxH_aR_war(atck, atckRollsS)
+      
+      if (output == 'war') {
+        return (atckRollsW)  
+      } else {
+        atckRollsWS <- bind_rows(atckRollsW)
+        
+        # need to summarise only if 1 or more rows exists
+        if (nrow(atckRollsWS) > 0) {
+          atckRollsWS <- atckRollsWS %>%
+            group_by(tgt) %>%
+            summarise(count = sum(count),
+                      total = sum(total))
         }
         
-        # summarising
-        atckSumm <- atckRollsS[[name]] %>%
-          filter(hit != 'miss') %>%
-          group_by(tgt) %>%
-          summarise(count = sum(count),
-                    total = sum(total))
-        
-        return (atckSumm)
-      })
-      # improve naming
-      names(atckRollsW) <- names(atck)
-      
-      return (atckRollsW)
+        # output == 'warsummary'
+        return (atckRollsWS)
+      }
     }
-    
   }
+}
+# ----------------------------------------------------------------------------#
+
+
+# helper function to apply confusion when many attackers aim at same target
+fxH_aR_confusion <- function (atck, dfnd, atckRolls, maxAtckMult) {
   
+  # single df with atckRolls
+  atckRollsDf <- lapply(names(atckRolls), function (y) {
+    bind_cols(atckr = y, atckRolls[[y]])
+  }) %>% bind_rows()
+  
+  # define max attacks each target group can have based on maxAtckMult
+  maxAtcks <- sapply(dfnd$name, function (x) {
+    c(tgt = x, maxAtcks = maxAtckMult * dfnd[dfnd$name == x, 'number'])
+  }) %>% t() %>% as.data.frame()
+  
+  # generate summary confusion table with actual attacks
+  confunsion <- atckRollsDf %>%
+    group_by(tgt) %>%
+    summarise(count = n()) %>%
+    left_join(maxAtcks, by = 'tgt') %>%
+    mutate(maxAtcks = as.numeric(maxAtcks),
+           effect = pmin(0, maxAtcks - count),
+           actualAtcks = pmin(count, maxAtcks))
+  
+  # resolving confusion and sampling attacks based on max per target group
+  atckRollsDf_resolved <- lapply(unique(atckRollsDf$tgt), function (z) {
+    df <- atckRollsDf[atckRollsDf$tgt == z, ]
+    subsetRows <- sample(nrow(atckRollsDf[atckRollsDf$tgt == z, ]),
+                         size = confunsion$actualAtcks[confunsion$tgt == z])
+    
+    return (df[subsetRows, ])
+  }) %>% bind_rows()
+  
+  # re-listing for output standard
+  atckRollsDf_resolvedList <- lapply(atck$name, function (x) {
+    atckRollsDf_resolved %>%
+      filter(atckr == x) %>%
+      select(-atckr)
+  })
+  names(atckRollsDf_resolvedList) <- unique(atckRollsDf_resolved$atckr)
+  
+  return (atckRollsDf_resolvedList)
+}
+# ----------------------------------------------------------------------------#
+
+
+# helper function to summarise results to verbosity 3
+fxH_aR_summary <- function (atck, atckRolls) {
+  
+  atckRollsS <- lapply(atck$name, function (name) {
+    
+    # skiping empty tables
+    if (is.null(atckRolls[[name]])) { return (NULL) }
+    if (nrow(atckRolls[[name]]) == 0) { return (NULL) }
+    
+    # summarising
+    atckSumm <- atckRolls[[name]] %>%
+      group_by(tgt, hit) %>%
+      summarise(count = n(),
+                total = sum(dmg))
+    return (atckSumm)
+  })
+  
+  # improve naming
+  names(atckRollsS) <- atck$name
+  
+  return (atckRollsS)
+}
+# ----------------------------------------------------------------------------#
+
+
+# helper function to summarise results to verbosity 2
+fxH_aR_war <- function (atck, atckRollsS) {
+  
+  atckRollsW <- lapply(atck$name, function (name) {
+    
+    # skiping empty tables
+    if (is.null(atckRollsS[[name]])) { return (NULL) }
+    
+    # summarising
+    atckSumm <- atckRollsS[[name]] %>%
+      filter(hit != 'miss') %>%
+      group_by(tgt) %>%
+      summarise(count = sum(count),
+                total = sum(total))
+    
+    # making NULL list items without any rows
+    if(nrow(atckSumm) == 0) { return (NULL) }
+    
+    return (atckSumm)
+  })
+  
+  # improve naming
+  names(atckRollsW) <- atck$name
+  
+  return (atckRollsW)
+}
+# ----------------------------------------------------------------------------#
+
+# wrapper function for making expectation runs over multiple single rounds
+fxW_aR_expectationRuns <- function(atck, dfnd, maxAtckMult = 6,
+                                   rounds = 100) {
+  
+  # run multiple single round
+  atcks <- lapply(1:rounds, function(x) {
+    fx_attackRolls2(atck = atck, dfnd = dfnd, maxAtckMult = maxAtckMult,
+                    seed = NULL, output = 'warsummary')
+  }) %>% bind_rows()
+  
+  # consolidate multiple runs in a singular average round
+  if (nrow(atcks) > 0) {
+    atcks <- atcks %>%
+      group_by(tgt) %>%
+      summarise(count = round(sum(count) / rounds),
+                total = round(sum(total) / rounds))
+  } 
+  
+  return (atcks)
 }
 
+# =========================================================================== #
+#                                 MCMC RUNS                                   #
+# =========================================================================== #
 
+# End-to-end combat with multiple rounds
 
-# pcs side set-up
-pcs_tgt <- list(
-  ggkeGhuse = list(ac = 19),
-  ggkeRest = list(ac = 18)
-)
+# load JSON data
+# condition: E(d20D) = 7.2 (0.7x); E(d20) = 10.5 (1x); E(d20A) = 13.8 (1.3x)
+npcsDf <- fx_convListDF(rjson::fromJSON(file = 'GlasrathUchbur.json'))
+pcsDf <- fx_convListDF(rjson::fromJSON(file = 'GlasrathPCs.json'))
 
-pcs_atck <- list(
-  ggkeGhuse = list(toHit = 5,
-               dmg = c(4:13),
-               number = 100,
-               condition = 1),
-  ggkeRest = list(toHit = 5,
-                dmg = c(4:11),
-                number = 152,
-                condition = 1)
-)
+# set up simulation
+runRound <- TRUE
+expSims <- 100
 
-npcs_tgt <- list(
-  skelzombie = list(ac = 11)
-  # skullComm = list(ac = 18),
-  # lizardUndead = list(ac = 14)
-)
+# first print
+npcsDf
+pcsDf
 
-# npcs side set-up
-# rolls: E(d20D) = 7.2; E(d20) = 10.5; E(d20A) = 13.8
-# .: condition: a = 1.3; n = 1; d = 0.7
-npcs_atck <- list(
-  skelzombie = list(toHit = 3,
-                    dmg = c(5:10), # c(3:8) when commander dies
-                    number = 550,
-                    condition = 1.125), # 1 when commander dies
-  skullComm = list(toHit = 7,
-                   dmg = c(6:18),
-                   number = 2,
-                   condition = 1),
-  lizardUndead = list(toHit = 7,
-                      dmg = c(7:21), # c(7:21) when commander dies
-                      number = 2,
-                      condition = 1.125) # 1 when commander dies
-)
-
-# pcs attack roll
-fx_attackRolls(atck = pcs_atck, dfnd = npcs_tgt, seed = NULL, output = 'war')
-
-# npcs attack roll
-fx_attackRolls(atck = npcs_atck, dfnd = pcs_tgt, seed = NULL, output = 'war')
-
-
-
-
-
-
-
-
-
-# pcs side set-up
-pcs <- list(
-  c = list(ac = 16),
-  g = list(ac = 14),
-  b = list(ac = 10),
-  t = list(ac = 13),
-  m = list(ac = 12),
-  d1 = list(ac = 14),
-  d2 = list(ac = 15)
-)
-
-npcs <- list(
-  skeleton = list(toHit = 4,
-                  dmg = c(3:8),
-                  number = 8,
-                  condition = 1),
-  zombie = list(toHit = 3,
-                dmg = c(2:7),
-                number = 1,
-                condition = 1)
-)
-
-fx_attackRolls(atck = npcs, dfnd = pcs, seed = NULL, output = 'summary')
+# run rounds back-to-back until stop condition is met
+while (runRound) {
+  
+  # run round for pcs side
+  atcks_pcs <- fxW_aR_expectationRuns(atck = pcsDf, dfnd = npcsDf,
+                                      maxAtckMult = 3, rounds = expSims)
+  
+  # update DF only if there is any successful attack on the round
+  if (nrow(atcks_pcs) > 0) {
+    npcsDf <- npcsDf %>%
+      left_join(atcks_pcs, by = c('name' = 'tgt')) %>%
+      mutate(count = ifelse(is.na(count), 0, count),
+             total = ifelse(is.na(total), 0, total),
+             survivors = pmax(0, round((number * hp - total) / hp, digits = 1)),
+             survivors = ifelse(is.na(survivors), 0, survivors)) %>%
+      mutate(number = survivors) %>%
+      select(-count, -total, -survivors)
+  }
+  
+  # run round for npcs side
+  atcks_npcs <- fxW_aR_expectationRuns(atck = npcsDf, dfnd = pcsDf,
+                                       maxAtckMult = 3, rounds = expSims)
+  
+  # update DF only if there is any successful attack on the round
+  if (nrow(atcks_npcs) > 0) {
+    pcsDf <- pcsDf %>%
+      left_join(atcks_npcs, by = c('name' = 'tgt')) %>%
+      mutate(count = ifelse(is.na(count), 0, count),
+             total = ifelse(is.na(total), 0, total),
+             survivors = pmax(0, round((number * hp - total) / hp, digits = 1)),
+             survivors = ifelse(is.na(survivors), 0, survivors)) %>%
+      mutate(number = survivors) %>%
+      select(-count, -total, -survivors)
+  }
+  
+  # print results for both sides
+  print(npcsDf)
+  print(pcsDf)
+  
+  # check if while-loops continues
+  runRound <- sum(npcsDf$number) > 5 & sum(pcsDf$number) > 5
+  print(runRound)
+}
