@@ -7,7 +7,7 @@
     "maxDmg": [10],
     "atkn": [1],
     "number": [1490],
-    "condition": [1.067]
+    "condition": [1.07]
   },
   "skullComm": {
     "ac": [18],
@@ -27,6 +27,6 @@
     "maxDmg": [25],
     "atkn": [2],
     "number": [3],
-    "condition": [1.067]
+    "condition": [1.07]
   }
 }

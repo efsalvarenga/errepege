@@ -6,7 +6,7 @@
     "minDmg": [4],
     "maxDmg": [13],
     "atkn": [1],
-    "number": [335],
+    "number": [371],
     "condition": [1]
   },
   "level2": {
@@ -16,7 +16,7 @@
     "minDmg": [4],
     "maxDmg": [11],
     "atkn": [1],
-    "number": [452],
+    "number": [409],
     "condition": [1]
   },
   "level1": {
@@ -26,7 +26,7 @@
     "minDmg": [4],
     "maxDmg": [11],
     "atkn": [1],
-    "number": [14],
+    "number": [21],
     "condition": [1]
   }
 }
