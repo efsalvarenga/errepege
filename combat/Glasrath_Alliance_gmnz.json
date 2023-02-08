@@ -1,0 +1,42 @@
+{
+  "gmnzInf3": {
+    "ac": [19],
+    "hp": [28],
+    "toHit": [5],
+    "minDmg": [4],
+    "maxDmg": [13],
+    "atkn": [1],
+    "number": [12],
+    "condition": [1]
+  },
+  "gmnzInf2": {
+    "ac": [18],
+    "hp": [20],
+    "toHit": [5],
+    "minDmg": [4],
+    "maxDmg": [11],
+    "atkn": [1],
+    "number": [67],
+    "condition": [1]
+  },
+  "gmnzInf2_rng": {
+    "ac": [18],
+    "hp": [20],
+    "toHit": [5],
+    "minDmg": [4],
+    "maxDmg": [11],
+    "atkn": [1],
+    "number": [132],
+    "condition": [1]
+  },
+  "gmnzInf1": {
+    "ac": [18],
+    "hp": [12],
+    "toHit": [4],
+    "minDmg": [4],
+    "maxDmg": [11],
+    "atkn": [1],
+    "number": [7],
+    "condition": [1]
+  }
+}

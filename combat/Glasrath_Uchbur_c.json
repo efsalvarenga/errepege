@@ -1,0 +1,32 @@
+{
+  "c_skelzombie": {
+    "ac": [11],
+    "hp": [17],
+    "toHit": [3],
+    "minDmg": [5],
+    "maxDmg": [10],
+    "atkn": [1],
+    "number": [480],
+    "condition": [1.07]
+  },
+  "c_skullComm": {
+    "ac": [18],
+    "hp": [102],
+    "toHit": [7],
+    "minDmg": [8],
+    "maxDmg": [15],
+    "atkn": [2],
+    "number": [1],
+    "condition": [1]
+  },
+  "c_lizardUndead": {
+    "ac": [14],
+    "hp": [66],
+    "toHit": [7],
+    "minDmg": [7],
+    "maxDmg": [25],
+    "atkn": [2],
+    "number": [1],
+    "condition": [1.07]
+  }
+}
