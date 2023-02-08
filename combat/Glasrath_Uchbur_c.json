@@ -6,7 +6,17 @@
     "minDmg": [5],
     "maxDmg": [10],
     "atkn": [1],
-    "number": [480],
+    "number": [320],
+    "condition": [1.07]
+  },
+  "c_skelzombie_bow": {
+    "ac": [11],
+    "hp": [17],
+    "toHit": [3],
+    "minDmg": [5],
+    "maxDmg": [10],
+    "atkn": [1],
+    "number": [160],
     "condition": [1.07]
   },
   "c_skullComm": {
