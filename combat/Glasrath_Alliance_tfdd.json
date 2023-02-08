@@ -9,7 +9,7 @@
     "number": [79],
     "condition": [1]
   },
-  "tfddInf2": {
+  "tfddInf2_rng": {
     "ac": [18],
     "hp": [20],
     "toHit": [5],
@@ -19,7 +19,7 @@
     "number": [8],
     "condition": [1]
   },
-  "tfddInf2_rng": {
+  "tfddInf2": {
     "ac": [18],
     "hp": [20],
     "toHit": [5],

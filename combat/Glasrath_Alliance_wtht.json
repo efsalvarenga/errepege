@@ -9,7 +9,7 @@
     "number": [0],
     "condition": [1]
   },
-  "wthtInf2": {
+  "wthtInf2_rng": {
     "ac": [18],
     "hp": [20],
     "toHit": [5],
@@ -19,7 +19,7 @@
     "number": [0],
     "condition": [1]
   },
-  "wthtInf2_rng": {
+  "wthtInf2": {
     "ac": [18],
     "hp": [20],
     "toHit": [5],

@@ -9,7 +9,7 @@
     "number": [150],
     "condition": [1]
   },
-  "ggkeInf2": {
+  "ggkeInf2_rng": {
     "ac": [18],
     "hp": [20],
     "toHit": [5],
@@ -19,7 +19,7 @@
     "number": [104],
     "condition": [1]
   },
-  "ggkeInf2_rng": {
+  "ggkeInf2": {
     "ac": [18],
     "hp": [20],
     "toHit": [5],

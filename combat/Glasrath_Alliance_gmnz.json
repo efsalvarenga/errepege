@@ -9,7 +9,7 @@
     "number": [12],
     "condition": [1]
   },
-  "gmnzInf2": {
+  "gmnzInf2_rng": {
     "ac": [18],
     "hp": [20],
     "toHit": [5],
@@ -19,7 +19,7 @@
     "number": [67],
     "condition": [1]
   },
-  "gmnzInf2_rng": {
+  "gmnzInf2": {
     "ac": [18],
     "hp": [20],
     "toHit": [5],

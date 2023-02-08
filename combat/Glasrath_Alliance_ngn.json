@@ -9,7 +9,7 @@
     "number": [120],
     "condition": [1]
   },
-  "ngnInf2": {
+  "ngnInf2_rng": {
     "ac": [18],
     "hp": [20],
     "toHit": [5],
@@ -19,7 +19,7 @@
     "number": [28],
     "condition": [1]
   },
-  "ngnInf2_rng": {
+  "ngnInf2": {
     "ac": [18],
     "hp": [20],
     "toHit": [5],
