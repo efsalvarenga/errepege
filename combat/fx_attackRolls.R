@@ -149,7 +149,7 @@ fxH_aR_confusion <- function (atck, dfnd, atckRolls, maxAtckMult) {
       filter(atckr == x) %>%
       select(-atckr)
   })
-  names(atckRollsDf_resolvedList) <- unique(atckRollsDf_resolved$atckr)
+  names(atckRollsDf_resolvedList) <- names(atckRolls)
   
   return (atckRollsDf_resolvedList)
 }
