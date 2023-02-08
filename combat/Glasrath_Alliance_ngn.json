@@ -5,7 +5,7 @@
     "toHit": [5],
     "minDmg": [4],
     "maxDmg": [13],
-    "atkn": [1],
+    "atkn": [0],
     "number": [120],
     "condition": [1]
   },
@@ -15,7 +15,7 @@
     "toHit": [5],
     "minDmg": [4],
     "maxDmg": [11],
-    "atkn": [1],
+    "atkn": [0],
     "number": [28],
     "condition": [1]
   },
@@ -35,7 +35,7 @@
     "toHit": [4],
     "minDmg": [4],
     "maxDmg": [11],
-    "atkn": [1],
+    "atkn": [0],
     "number": [0],
     "condition": [1]
   }
