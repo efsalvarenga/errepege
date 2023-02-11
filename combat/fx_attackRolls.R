@@ -21,12 +21,15 @@ fx_convListDF <- function (list) {
 
 # main attack roll function
 fx_attackRolls <- function(atck, dfnd, seed = NULL,
-                            maxAtckMult = 6,
+                            maxAtckMult = 6, adv = 1,
                             output = c('detail', 'summary',
                                        'wardetail', 'warsummary')) {
   
   # set seed if requested by argument
   if (!is.null(seed)) { set.seed(seed) }
+  
+  # setting advantage/disadvantage
+  atck <- atck %>% mutate(condition = condition * adv)
   
   # attack roll
   atckRolls <- lapply(atck$name, function (name) {
