@@ -6,8 +6,8 @@
     "minDmg": [4],
     "maxDmg": [13],
     "atkn": [0],
-    "number": [79],
-    "condition": [1]
+    "number": [24],
+    "condition": [0.7]
   },
   "tfddInf2_rng": {
     "ac": [18],
@@ -16,8 +16,8 @@
     "minDmg": [4],
     "maxDmg": [11],
     "atkn": [1],
-    "number": [8],
-    "condition": [1]
+    "number": [0],
+    "condition": [0.7]
   },
   "tfddInf2": {
     "ac": [18],
@@ -27,7 +27,7 @@
     "maxDmg": [11],
     "atkn": [0],
     "number": [0],
-    "condition": [1]
+    "condition": [0.7]
   },
   "tfddInf1": {
     "ac": [18],
@@ -37,6 +37,6 @@
     "maxDmg": [11],
     "atkn": [0],
     "number": [0],
-    "condition": [1]
+    "condition": [0.7]
   }
 }

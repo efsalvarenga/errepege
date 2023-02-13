@@ -6,7 +6,7 @@
     "minDmg": [4],
     "maxDmg": [13],
     "atkn": [0],
-    "number": [12],
+    "number": [9],
     "condition": [1]
   },
   "gmnzInf2_rng": {
@@ -16,7 +16,7 @@
     "minDmg": [4],
     "maxDmg": [11],
     "atkn": [1],
-    "number": [67],
+    "number": [46],
     "condition": [1]
   },
   "gmnzInf2": {
@@ -26,7 +26,7 @@
     "minDmg": [4],
     "maxDmg": [11],
     "atkn": [0],
-    "number": [132],
+    "number": [97],
     "condition": [1]
   },
   "gmnzInf1": {

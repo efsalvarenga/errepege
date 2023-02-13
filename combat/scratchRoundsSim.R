@@ -30,15 +30,15 @@ fx_attackRolls(atck = npcsDf1, dfnd = pcsDf1, seed = NULL,
 # condition: E(d20D) = 7.2 (0.7x); E(d20) = 10.5 (1x); E(d20A) = 13.8 (1.3x)
 pcsList <- c(
   # 'wtht',
-  # 'ggke',
+  'ggke',
   'gmnz',
-  # 'tfdd',
-  'ngn'
-  # 'dmth'
+  'tfdd',
+  'ngn',
+  'dmth'
 )
 
 npcsList <- c(
-  # 't',
+  # 't'
   'g'
   # 'c'
 )
@@ -70,7 +70,7 @@ npcsDf2 <- read.csv(paste0('./combat/npcsDf2.csv'))
 # npcs attacking
 npcsRound <- left_join(pcsDf2,
                        fx_attackRolls(atck = npcsDf2, dfnd = pcsDf2,
-                                      seed = NULL, adv = 1.0,
+                                      seed = NULL, adv = 1,
                                       maxAtckMult = 3, output = 'warsummary'),
                        by = c('name' = 'tgt')) %>%
   mutate(count = ifelse(is.na(count), 0, count),
@@ -89,7 +89,7 @@ if (autoUpdt) {
 # pcs attacking
 pcsRound <- left_join(npcsDf2,
                       fx_attackRolls(atck = pcsDf2, dfnd = npcsDf2,
-                                     seed = NULL, adv = 1.0,
+                                     seed = NULL, adv = 1.3,
                                      maxAtckMult = 3, output = 'warsummary'),
                       by = c('name' = 'tgt')) %>%
   mutate(count = ifelse(is.na(count), 0, count),

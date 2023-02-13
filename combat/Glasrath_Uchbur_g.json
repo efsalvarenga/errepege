@@ -6,7 +6,7 @@
     "minDmg": [5],
     "maxDmg": [10],
     "atkn": [0],
-    "number": [340],
+    "number": [70],
     "condition": [1.07]
   },
   "g_skelzombie_bow": {
@@ -16,12 +16,12 @@
     "minDmg": [5],
     "maxDmg": [10],
     "atkn": [1],
-    "number": [170],
+    "number": [20],
     "condition": [1.07]
   },
   "g_skullComm": {
     "ac": [18],
-    "hp": [102],
+    "hp": [82],
     "toHit": [7],
     "minDmg": [8],
     "maxDmg": [15],
@@ -31,12 +31,12 @@
   },
   "g_lizardUndead": {
     "ac": [14],
-    "hp": [66],
+    "hp": [40],
     "toHit": [7],
     "minDmg": [7],
     "maxDmg": [25],
     "atkn": [0],
-    "number": [1],
+    "number": [0],
     "condition": [1.07]
   }
 }
