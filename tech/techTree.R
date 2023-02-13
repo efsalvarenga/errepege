@@ -4,7 +4,7 @@ library(stringr)
 library(jsonlite)
 
 # import data
-techTree <- rjson::fromJSON(file = "civTechTree.json")
+techTree <- rjson::fromJSON(file = "tech/civTechTree.json")
 
 # clean data
 techTree <- lapply(techTree, function(tech) {
@@ -93,7 +93,7 @@ createTechDevPath <- function (totResources = 219945, dvpdTechs,
   
   # create results for function
   unitsAvailable <- techTable[techTable$tech_name %in% dvpdTechs, ]$units
-  unitsAvailable <- toString(unitsAvailable[runSim$unitsAvailable != ''])
+  unitsAvailable <- toString(unitsAvailable[unitsAvailable != ''])
   result <- list(dvpdTechs, unitsAvailable, resources,
                  totResources, dvpdTechsIni, currentYear,
                  currentDevDevRate, seed)
@@ -117,33 +117,32 @@ relatedDev <- function (relCiv, relRate = 0.7) {
 }
 
 # technology development simulation
+startYear = 3877
+currentYear = 3877.5
+
 
 # import existing technology development simulation
-simList <- rjson::fromJSON(file = "simList.json")
-
-# simulation settings
-reRunExisting <- FALSE
+simList <- rjson::fromJSON(file = "tech/simList.json")
 
 names(simList)
 
-if (FALSE) {
-  simList$kuzar <- createTechDevPath(420,
+# re-run
+simList$kuzar <- createTechDevPath(420,
+                                   dvpdTechs = simList$kuzar$dvpdOrder,
+                                   currentDevDevRate = 4, seed = 1)
+simList$acrisae <- createTechDevPath(13000,
                                      dvpdTechs = 'agriculture',
-                                     currentDevDevRate = 4, seed = 1)
-  simList$acrisae <- createTechDevPath(9000,
-                                       dvpdTechs = 'agriculture',
-                                       currentDevDevRate = 40, seed = 9)
-  simList$nurderad <- createTechDevPath(650,
-                                        dvpdTechs = relatedDev('kuzar', 0.7),
-                                        currentDevDevRate = 6, seed = 3)
-  simList$tolfoddund <- createTechDevPath(420,
-                                          dvpdTechs = relatedDev('kuzar', 0.5),
-                                          currentDevDevRate = 4, seed = 1)
-  
-  simList$kostoch <- createTechDevPath(470,
-                                       dvpdTechs = relatedDev('kuzar', 0.5),
-                                       currentDevDevRate = 4.2, seed = 1)
-}
+                                     currentDevDevRate = 40, seed = 9)
+simList$nurderad <- createTechDevPath(650,
+                                      dvpdTechs = relatedDev('kuzar', 0.7),
+                                      currentDevDevRate = 6, seed = 3)
+simList$tolfoddund <- createTechDevPath(420,
+                                        dvpdTechs = relatedDev('kuzar', 0.5),
+                                        currentDevDevRate = 4, seed = 1)
+simList$kostoch <- createTechDevPath(470,
+                                     dvpdTechs = relatedDev('kuzar', 0.5),
+                                     currentDevDevRate = 4.2, seed = 1)
+
 
 simTable <- lapply(names(simList), function (civ) {
   data.frame(civ = civ,
