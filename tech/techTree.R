@@ -59,7 +59,7 @@ createTechDevPath <- function (totResources = 219945, dvpdTechs,
   # cycle until resources are not negative to develop and not all techs are
   # developed - it might be that in the end it will be negative resources
   while(resources > 0 && length(dvpdTechs) < nrow(techTable)) {
-
+    
     # check what are the options for development, without filter
     altDevs <- techForward[techTable$tech_name %in% dvpdTechs] %>%
       unlist() %>%
@@ -120,7 +120,6 @@ relatedDev <- function (relCiv, relRate = 0.7) {
 startYear = 3877
 currentYear = 3877.5
 
-
 # import existing technology development simulation
 simList <- rjson::fromJSON(file = "tech/simList.json")
 
@@ -133,7 +132,7 @@ simList$kuzar <- createTechDevPath(420,
 simList$acrisae <- createTechDevPath(13000,
                                      dvpdTechs = 'agriculture',
                                      currentDevDevRate = 40, seed = 9)
-simList$nurderad <- createTechDevPath(650,
+simList$nurderad <- createTechDevPath(1650,
                                       dvpdTechs = relatedDev('kuzar', 0.7),
                                       currentDevDevRate = 6, seed = 3)
 simList$tolfoddund <- createTechDevPath(420,
@@ -142,6 +141,15 @@ simList$tolfoddund <- createTechDevPath(420,
 simList$kostoch <- createTechDevPath(470,
                                      dvpdTechs = relatedDev('kuzar', 0.5),
                                      currentDevDevRate = 4.2, seed = 1)
+simList$nargun <- createTechDevPath(750,
+                                    dvpdTechs = relatedDev('kuzar', 0.3),
+                                    currentDevDevRate = 6, seed = 35)
+simList$narguncaptaincy <- createTechDevPath(950,
+                                             dvpdTechs = relatedDev('nargun', 0.6),
+                                             currentDevDevRate = 6, seed = 2)
+simList$linhe <- createTechDevPath(1550,
+                                   dvpdTechs = relatedDev('narguncaptaincy', 0.7),
+                                   currentDevDevRate = 6, seed = 3)
 
 
 simTable <- lapply(names(simList), function (civ) {
@@ -150,9 +158,8 @@ simTable <- lapply(names(simList), function (civ) {
 }) %>% bind_rows()
 
 
-if (FALSE) {
-  simListJSON <- jsonlite::toJSON(simList, pretty = TRUE)
-  write(simListJSON, file = 'simList.json')
-  
-  write.csv(simTable, 'simTable.csv')
-}
+
+simListJSON <- jsonlite::toJSON(simList, pretty = TRUE)
+write(simListJSON, file = 'tech/simList.json')
+
+write.csv(simTable, 'tech/simTable.csv')

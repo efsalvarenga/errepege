@@ -20,10 +20,10 @@
     "seed": [9]
   },
   "nurderad": {
-    "dvpdOrder": ["agriculture", "pottery", "animal husbandry", "archery", "mining", "sailing", "optics", "trapping", "the wheel", "bronze working", "horseback riding", "iron working"],
-    "unitsAvailable": ["Worker, Settler, Warrior, Scout, Atlatlist, Jaguar, Maori warrior, Pathfinder, Work boat, Trireme, Dromon, Quinquereme, Cargo ship, Swordsman, Mohawk warrior, Legion, Kris Swordsman, Horseman, Companion cavalry, Cataphract, African forest elephant, Chariot archer, War chariot, War elephant, Horse archer, Spearman, Hoplite, Immortal, Pictish warrior, Battering ram, Caravan, Archer, Bowman, Slinger"],
-    "resourcesLeft": [-115],
-    "totResources": [650],
+    "dvpdOrder": ["agriculture", "pottery", "animal husbandry", "archery", "mining", "sailing", "optics", "trapping", "the wheel", "bronze working", "horseback riding", "iron working", "calendar", "writing", "philosophy", "drama and poetry", "theology", "compass"],
+    "unitsAvailable": ["Worker, Settler, Warrior, Scout, Atlatlist, Jaguar, Maori warrior, Pathfinder, Galleass, Great galleass, Work boat, Trireme, Dromon, Quinquereme, Cargo ship, Swordsman, Mohawk warrior, Legion, Kris Swordsman, Horseman, Companion cavalry, Cataphract, African forest elephant, Chariot archer, War chariot, War elephant, Horse archer, Spearman, Hoplite, Immortal, Pictish warrior, Battering ram, Caravan, Archer, Bowman, Slinger"],
+    "resourcesLeft": [-225],
+    "totResources": [1650],
     "dvpdTechsIni": ["agriculture", "pottery", "animal husbandry", "archery", "mining", "sailing", "optics"],
     "currentYear": [3877],
     "currentDevDevRate": [6],
@@ -58,5 +58,25 @@
     "currentYear": [3877],
     "currentDevDevRate": [6],
     "seed": [35]
+  },
+  "narguncaptaincy": {
+    "dvpdOrder": ["agriculture", "pottery", "animal husbandry", "archery", "mining", "sailing", "optics", "trapping", "the wheel", "bronze working", "horseback riding", "iron working", "calendar", "writing", "philosophy"],
+    "unitsAvailable": ["Worker, Settler, Warrior, Scout, Atlatlist, Jaguar, Maori warrior, Pathfinder, Work boat, Trireme, Dromon, Quinquereme, Cargo ship, Swordsman, Mohawk warrior, Legion, Kris Swordsman, Horseman, Companion cavalry, Cataphract, African forest elephant, Chariot archer, War chariot, War elephant, Horse archer, Spearman, Hoplite, Immortal, Pictish warrior, Battering ram, Caravan, Archer, Bowman, Slinger"],
+    "resourcesLeft": [-100],
+    "totResources": [950],
+    "dvpdTechsIni": ["agriculture", "pottery", "animal husbandry", "archery", "mining", "sailing", "optics"],
+    "currentYear": [3877],
+    "currentDevDevRate": [6],
+    "seed": [2]
+  },
+  "linhe": {
+    "dvpdOrder": ["agriculture", "pottery", "animal husbandry", "archery", "mining", "sailing", "optics", "trapping", "the wheel", "bronze working", "horseback riding", "iron working", "calendar", "writing", "philosophy", "drama and poetry", "theology", "compass"],
+    "unitsAvailable": ["Worker, Settler, Warrior, Scout, Atlatlist, Jaguar, Maori warrior, Pathfinder, Galleass, Great galleass, Work boat, Trireme, Dromon, Quinquereme, Cargo ship, Swordsman, Mohawk warrior, Legion, Kris Swordsman, Horseman, Companion cavalry, Cataphract, African forest elephant, Chariot archer, War chariot, War elephant, Horse archer, Spearman, Hoplite, Immortal, Pictish warrior, Battering ram, Caravan, Archer, Bowman, Slinger"],
+    "resourcesLeft": [-325],
+    "totResources": [1550],
+    "dvpdTechsIni": ["agriculture", "pottery", "animal husbandry", "archery", "mining", "sailing", "optics", "trapping", "the wheel", "bronze working"],
+    "currentYear": [3877],
+    "currentDevDevRate": [6],
+    "seed": [3]
   }
 }
