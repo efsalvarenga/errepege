@@ -1,0 +1,23 @@
+{
+  "nargun": {
+    "tier": [1],
+    "type": ["imperial"],
+    "turf": [5],
+    "dev": [0],
+    "expansion": [1]
+  },
+  "gamunz": {
+    "tier": [1],
+    "type": ["cultural"],
+    "turf": [3],
+    "dev": [0],
+    "expansion": [-1]
+  },
+  "ghuse": {
+    "tier": [2],
+    "type": ["religious"],
+    "turf": [4],
+    "dev": [0],
+    "expansion": [10]
+  }
+}
