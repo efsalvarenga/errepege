@@ -1,23 +1,26 @@
 {
   "nargun": {
-    "tier": [1],
     "type": ["imperial"],
+    "tier": [1],
+    "hold": ["strong"],
     "turf": [5],
     "dev": [0],
-    "expansion": [1]
+    "tenacity": [1]
   },
   "gamunz": {
-    "tier": [1],
     "type": ["cultural"],
+    "tier": [1],
+    "hold": ["strong"],
     "turf": [3],
     "dev": [0],
-    "expansion": [-1]
+    "tenacity": [-1]
   },
   "ghuse": {
-    "tier": [2],
     "type": ["religious"],
+    "tier": [2],
+    "hold": ["weak"],
     "turf": [4],
     "dev": [0],
-    "expansion": [4]
+    "tenacity": [6]
   }
 }
