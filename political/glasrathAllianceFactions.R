@@ -70,3 +70,18 @@ linhe <- factionGame(linhe, nRounds = 300, seed = 1)
 linhe %>%
   mutate(turf = round(turf),
          dev = round(dev))
+
+linhe <- factionGame(linhe, nRounds = 150, seed = 1)
+linhe %>%
+  mutate(turf = round(turf),
+         dev = round(dev))
+
+linhe <- factionGame(linhe, nRounds = 150, seed = 1)
+linhe %>%
+  mutate(turf = round(turf),
+         dev = round(dev))
+
+linhe <- factionGame(linhe, nRounds = 150, seed = 1)
+linhe %>%
+  mutate(turf = round(turf),
+         dev = round(dev))

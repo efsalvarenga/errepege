@@ -5,22 +5,22 @@
     "hold": ["weak"],
     "turf": [2],
     "dev": [0],
-    "tenacity": [300]
+    "tenacity": [55]
   },
   "rurkinar": {
-    "type": ["cultural"],
+    "type": ["religious"],
     "tier": [2],
     "hold": ["strong"],
-    "turf": [9],
+    "turf": [3],
     "dev": [0],
-    "tenacity": [0]
+    "tenacity": [10]
   },
   "FFKAeast": {
     "type": ["religious"],
     "tier": [3],
     "hold": ["weak"],
-    "turf": [1],
+    "turf": [7],
     "dev": [0],
-    "tenacity": [500]
+    "tenacity": [0]
   }
 }
