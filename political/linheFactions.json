@@ -1,0 +1,26 @@
+{
+  "cagothze": {
+    "type": ["cultural"],
+    "tier": [2],
+    "hold": ["weak"],
+    "turf": [2],
+    "dev": [0],
+    "tenacity": [300]
+  },
+  "rurkinar": {
+    "type": ["cultural"],
+    "tier": [2],
+    "hold": ["strong"],
+    "turf": [9],
+    "dev": [0],
+    "tenacity": [0]
+  },
+  "FFKAeast": {
+    "type": ["religious"],
+    "tier": [3],
+    "hold": ["weak"],
+    "turf": [1],
+    "dev": [0],
+    "tenacity": [500]
+  }
+}

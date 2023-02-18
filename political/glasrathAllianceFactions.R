@@ -52,9 +52,21 @@ alliance <- fx_convListDF(rjson::fromJSON(
   file = './political/glasrathAllianceFactions.json'))
 
 # resolving the first 2 months while characters are preparing to leave
-# to the ammuinoth
+# to the Ammuinoth (3877.2 - 3877.4 NC)
 alliance <- factionGame(alliance, nRounds = 60, seed = 1)
 alliance %>%
   mutate(turf = round(turf),
          dev = round(dev))
 
+
+# =========================================================================== #
+#                                   Linhe                                     #
+# =========================================================================== #
+linhe <- fx_convListDF(rjson::fromJSON(
+  file = './political/linheFactions.json'))
+linhe
+
+linhe <- factionGame(linhe, nRounds = 300, seed = 1)
+linhe %>%
+  mutate(turf = round(turf),
+         dev = round(dev))
