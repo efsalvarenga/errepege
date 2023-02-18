@@ -15,13 +15,13 @@ alliance <- fx_convListDF(rjson::fromJSON(
   file = './political/glasrathAllianceFactions.json'))
 alliance
 
-stopCond <- 210
+stopCond <- 270
 rounds <- 0
 
 while (rounds < stopCond) {
   alliance <- alliance %>%
     mutate(roll = sample(1:20, n()),
-           result = roll + tier + expansion,
+           result = roll + 10 * tier + expansion,
            devAdd = round(result / max(result), 1),
            turfAdd = ifelse(dev + devAdd + turf > 12, turf/sum(turf), 0),
            turfNew = ifelse(turfAdd + turf < 1, 0, turfAdd + turf),
