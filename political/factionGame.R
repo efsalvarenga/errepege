@@ -50,6 +50,7 @@ factionGame <- function (factionsDF, nRounds, seed = NULL) {
 # =========================================================================== #
 alliance <- fx_convListDF(rjson::fromJSON(
   file = './political/glasrathAllianceFactions.json'))
+alliance
 
 # resolving the first 2 months while characters are preparing to leave
 # to the Ammuinoth (3877.2 - 3877.4 NC)
