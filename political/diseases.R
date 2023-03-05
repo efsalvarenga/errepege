@@ -1,35 +1,34 @@
-#Load required libraries
+# =========================================================================== #
+#                            LIBRARIES AND SET UP                             #
+# =========================================================================== #
 library(ggplot2)
 library(deSolve)
 library(reshape2)
 library(plotly)
 
-
-# SIR model function 
-
-sir_model <- function(time,state,parameters){
-  with(as.list(c(state,parameters)),{
-    N=S+I+R
-    lambda=beta*(I/N) 
-    dS=-lambda*S
-    dI=lambda*S-gamma*I
-    dR=gamma*I
+# =========================================================================== #
+#                                  FUNCTION                                   #
+# =========================================================================== #
+sirModel <- function(time, state, parameters) {
+  with(as.list(c(state, parameters)), {
+    N <- S + I + R
+    lambda <- beta * (I / N) 
+    dS <- -lambda * S
+    dI <- lambda * S - gamma * I
+    dR <- gamma * I
     
-    return(list(c(dS,dI,dR)))
-  }
-  )
+    return(list(c(dS, dI, dR)))
+  })
 }
 
-# Model inputs
-
+# =========================================================================== #
+#                                  Throtha                                    #
+# =========================================================================== #
 pop <- 3000
 
-initial_state_values=c(S=pop,I=1,R=0)
-parameters=c(gamma=0.07,beta=0.55)
-
-# Time points
-
-time=seq(from=1,to=52*3,by=1)
+iniStateVal <- c(S = pop, I = 1, R = 0)
+parameters <- c(gamma = 0.07, beta = 0.55)
+time <- seq(from = 1, to = 52 * 3, by = 1)
 
 
 
