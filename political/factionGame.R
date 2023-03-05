@@ -46,43 +46,74 @@ factionGame <- function (factionsDF, nRounds, seed = NULL) {
 }
 
 # =========================================================================== #
-#                             Glasrath Alliance                               #
+#                             Loading Factions                                #
 # =========================================================================== #
-alliance <- fx_convListDF(rjson::fromJSON(
-  file = './political/glasrathAllianceFactions.json'))
-alliance
+regionsNames <- c('glasrath', 'linhe')
 
-# resolving the first 2 months while characters are preparing to leave
-# to the Ammuinoth (3877.2 - 3877.4 NC)
-alliance <- factionGame(alliance, nRounds = 60, seed = 1)
-alliance %>%
-  mutate(turf = round(turf),
-         dev = round(dev))
-
+regionsList <- lapply(regionsNames, function (x) {
+  fileName <- paste0('./political/factions_', x, '.json')
+  fx_convListDF(rjson::fromJSON(file = fileName))
+})
+names(regionsList) <- regionsNames
 
 # =========================================================================== #
-#                                   Linhe                                     #
+#                  Factions Simulator History Matching                        #
 # =========================================================================== #
-linhe <- fx_convListDF(rjson::fromJSON(
-  file = './political/linheFactions.json'))
-linhe
+# Simulator start date is when the Glasrath Alliance was formed
+simDate <- 3877.2
 
-linhe <- factionGame(linhe, nRounds = 300, seed = 1)
-linhe %>%
-  mutate(turf = round(turf),
-         dev = round(dev))
+# Seed to use on function
+useSeed <- 1
 
-linhe <- factionGame(linhe, nRounds = 150, seed = 1)
-linhe %>%
-  mutate(turf = round(turf),
-         dev = round(dev))
+# Part 2, Chapter 1
+newDate <- 3877.4
 
-linhe <- factionGame(linhe, nRounds = 150, seed = 1)
-linhe %>%
-  mutate(turf = round(turf),
-         dev = round(dev))
+regionsList <- lapply(regionsNames, function(x) {
+  factionGame(factionsDF = regionsList[[x]],
+              nRounds = (newDate - simDate) * 300,
+              seed = useSeed)
+})
+names(regionsList) <- regionsNames
+simDate <- newDate
 
-linhe <- factionGame(linhe, nRounds = 150, seed = 1)
-linhe %>%
-  mutate(turf = round(turf),
-         dev = round(dev))
+# Part 2, Chapter 3
+newDate <- 3877.52
+
+regionsList <- lapply(regionsNames, function(x) {
+  factionGame(factionsDF = regionsList[[x]],
+              nRounds = (newDate - simDate) * 300,
+              seed = useSeed)
+})
+names(regionsList) <- regionsNames
+simDate <- newDate
+
+regionsList
+
+# =========================================================================== #
+#                  Factions Simulator Future Predictions                      #
+# =========================================================================== #
+# New simulation date
+newDate <- 3878.52
+
+# Copy current state of factions
+regionsListPred <- regionsList
+
+# Editing current state based on PCs actions
+# TIER changes if the faction is now at a higher tier of play (unlikely)
+# TURF changes if the PCs helped the faction gaine territory/influence
+# TENACITY changes if the PCs helped increase the manpower of a given faction
+regionsListPred$linhe[regionsListPred$linhe$name == 'rurkinar', 'turf']
+
+# New prediction is made
+regionsListPred <- lapply(regionsNames, function(x) {
+  factionGame(factionsDF = regionsListPred[[x]],
+              nRounds = (newDate - simDate) * 300,
+              seed = useSeed)
+})
+names(regionsListPred) <- regionsNames
+
+# Comparison of current and future states
+regionsList
+regionsListPred
+
+
