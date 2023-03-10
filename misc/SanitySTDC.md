@@ -19,7 +19,7 @@
 |                        Hearing an eldritch entity speak                        |       14      |
 |                            Finding a gruesome scene                            |       14      |
 |                Discovering forbidden or ancient arcane knowledge               |       14      |
-|                         Encountering a personal phobia                         |       14      |
+| Encountering and forcing oneself to face a personal phobia                     |       14      |
 |                 Learning spells or secrets of a forbidden tome                 |       15      |
 |     Witnessing the death of a party member in a gruesome or horrific manner    |       15      |
 | Experiencing a minor supernatural situation (involving deities or aberrations) |       16      |
