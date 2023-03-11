@@ -5,7 +5,7 @@
     "hold": ["weak"],
     "turf": [4],
     "dev": [0],
-    "tenacity": [2]
+    "tenacity": [5]
   },
   "rurkinar": {
     "type": ["religious"],
@@ -21,6 +21,6 @@
     "hold": ["weak"],
     "turf": [4],
     "dev": [0],
-    "tenacity": [3]
+    "tenacity": [2]
   }
 }

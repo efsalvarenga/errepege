@@ -5,27 +5,27 @@
       "type": "imperial",
       "tier": 1,
       "hold": "strong",
-      "turf": 4.6,
-      "dev": 6.2,
-      "tenacity": 1
+      "turf": 5.9,
+      "dev": 3.5,
+      "tenacity": 10
     },
     {
       "name": "gamunz",
       "type": "cultural",
       "tier": 1,
       "hold": "strong",
-      "turf": 2,
-      "dev": 4.7,
-      "tenacity": -1
+      "turf": 2.8,
+      "dev": 8.3,
+      "tenacity": -10
     },
     {
       "name": "ghuse",
       "type": "religious",
       "tier": 2,
       "hold": "weak",
-      "turf": 5.3,
-      "dev": 0,
-      "tenacity": 6
+      "turf": 3.3,
+      "dev": 7,
+      "tenacity": 100
     }
   ],
   "linhe": [
@@ -34,17 +34,17 @@
       "type": "cultural",
       "tier": 1,
       "hold": "weak",
-      "turf": 3.1,
-      "dev": 4.9,
-      "tenacity": 2
+      "turf": 3.3,
+      "dev": 5.1,
+      "tenacity": 5
     },
     {
       "name": "rurkinar",
       "type": "religious",
       "tier": 2,
       "hold": "strong",
-      "turf": 4,
-      "dev": 0.6,
+      "turf": 3.9,
+      "dev": 1.5,
       "tenacity": 0
     },
     {
@@ -52,9 +52,9 @@
       "type": "religious",
       "tier": 3,
       "hold": "weak",
-      "turf": 4.9,
-      "dev": 6.9,
-      "tenacity": 3
+      "turf": 4.8,
+      "dev": 4.9,
+      "tenacity": 2
     }
   ],
   "simDate": [3877.52]

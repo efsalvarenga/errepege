@@ -99,7 +99,7 @@ write(regionsListJSON, file = './political/regionsList.json')
 #                  Factions Simulator Future Predictions                      #
 # =========================================================================== #
 # New simulation date
-newDate <- 3878.52
+newDate <- 3878.32
 
 # Copy current state of factions
 regionsListPred <- regionsList

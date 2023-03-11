@@ -3,24 +3,24 @@
     "type": ["imperial"],
     "tier": [1],
     "hold": ["strong"],
-    "turf": [5],
+    "turf": [6],
     "dev": [0],
-    "tenacity": [1]
+    "tenacity": [10]
   },
   "gamunz": {
     "type": ["cultural"],
     "tier": [1],
     "hold": ["strong"],
-    "turf": [3],
+    "turf": [4],
     "dev": [0],
-    "tenacity": [-1]
+    "tenacity": [-10]
   },
   "ghuse": {
     "type": ["religious"],
     "tier": [2],
     "hold": ["weak"],
-    "turf": [4],
+    "turf": [2],
     "dev": [0],
-    "tenacity": [6]
+    "tenacity": [100]
   }
 }
