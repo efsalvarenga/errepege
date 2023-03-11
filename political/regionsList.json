@@ -34,17 +34,17 @@
       "type": "cultural",
       "tier": 1,
       "hold": "weak",
-      "turf": 3.3,
-      "dev": 5.1,
-      "tenacity": 5
+      "turf": 4.5,
+      "dev": 2.7,
+      "tenacity": 25
     },
     {
       "name": "rurkinar",
       "type": "religious",
       "tier": 2,
       "hold": "strong",
-      "turf": 3.9,
-      "dev": 1.5,
+      "turf": 3.3,
+      "dev": 3.6,
       "tenacity": 0
     },
     {
@@ -52,8 +52,8 @@
       "type": "religious",
       "tier": 3,
       "hold": "weak",
-      "turf": 4.8,
-      "dev": 4.9,
+      "turf": 4.2,
+      "dev": 3.7,
       "tenacity": 2
     }
   ],
