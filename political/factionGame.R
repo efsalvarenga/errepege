@@ -89,7 +89,7 @@ regionsList <- lapply(regionsNames, function(x) {
 })
 names(regionsList) <- regionsNames
 simDate <- newDate
-simDate
+regionsList$simDate <- simDate
 regionsList
 
 regionsListJSON <- jsonlite::toJSON(regionsList, pretty = TRUE)
@@ -106,17 +106,17 @@ regionsListPred <- regionsList
 
 # Editing current state based on PCs actions
 # TIER changes if the faction is now at a higher tier of play (unlikely)
-# TURF changes if the PCs helped the faction gaine territory/influence
+# TURF changes if the PCs helped the faction gain territory/influence
 # TENACITY changes if the PCs helped increase the manpower of a given faction
 regionsListPred$linhe[regionsListPred$linhe$name == 'rurkinar', 'turf']
 
 # New prediction is made
 regionsListPred <- lapply(regionsNames, function(x) {
   factionGame(factionsDF = regionsListPred[[x]],
-              nRounds = (newDate - simDate) * 300,
-              seed = useSeed)
+              nRounds = (newDate - simDate) * 300)
 })
 names(regionsListPred) <- regionsNames
+regionsListPred$simDate <- newDate
 
 # Comparison of current and future states
 regionsList

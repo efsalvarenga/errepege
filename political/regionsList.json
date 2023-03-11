@@ -34,27 +34,27 @@
       "type": "cultural",
       "tier": 1,
       "hold": "weak",
-      "turf": 1.9,
-      "dev": 9,
-      "tenacity": 55
+      "turf": 3.1,
+      "dev": 4.9,
+      "tenacity": 2
     },
     {
       "name": "rurkinar",
       "type": "religious",
       "tier": 2,
       "hold": "strong",
-      "turf": 3,
-      "dev": 6,
-      "tenacity": 10
+      "turf": 4,
+      "dev": 0.6,
+      "tenacity": 0
     },
     {
       "name": "FFKAeast",
       "type": "religious",
       "tier": 3,
       "hold": "weak",
-      "turf": 7.1,
-      "dev": 3.8,
-      "tenacity": 0
+      "turf": 4.9,
+      "dev": 6.9,
+      "tenacity": 3
     }
   ],
   "simDate": [3877.52]
