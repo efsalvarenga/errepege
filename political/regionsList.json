@@ -1,0 +1,60 @@
+{
+  "glasrath": [
+    {
+      "name": "nargun",
+      "type": "imperial",
+      "tier": 1,
+      "hold": "strong",
+      "turf": 4.6,
+      "dev": 6.2,
+      "tenacity": 1
+    },
+    {
+      "name": "gamunz",
+      "type": "cultural",
+      "tier": 1,
+      "hold": "strong",
+      "turf": 2,
+      "dev": 4.7,
+      "tenacity": -1
+    },
+    {
+      "name": "ghuse",
+      "type": "religious",
+      "tier": 2,
+      "hold": "weak",
+      "turf": 5.3,
+      "dev": 0,
+      "tenacity": 6
+    }
+  ],
+  "linhe": [
+    {
+      "name": "cagothze",
+      "type": "cultural",
+      "tier": 1,
+      "hold": "weak",
+      "turf": 1.9,
+      "dev": 9,
+      "tenacity": 55
+    },
+    {
+      "name": "rurkinar",
+      "type": "religious",
+      "tier": 2,
+      "hold": "strong",
+      "turf": 3,
+      "dev": 6,
+      "tenacity": 10
+    },
+    {
+      "name": "FFKAeast",
+      "type": "religious",
+      "tier": 3,
+      "hold": "weak",
+      "turf": 7.1,
+      "dev": 3.8,
+      "tenacity": 0
+    }
+  ]
+}

@@ -55,6 +55,7 @@ regionsList <- lapply(regionsNames, function (x) {
   fx_convListDF(rjson::fromJSON(file = fileName))
 })
 names(regionsList) <- regionsNames
+regionsList
 
 # =========================================================================== #
 #                  Factions Simulator History Matching                        #
@@ -74,7 +75,9 @@ regionsList <- lapply(regionsNames, function(x) {
               seed = useSeed)
 })
 names(regionsList) <- regionsNames
+regionsList
 simDate <- newDate
+
 
 # Part 2, Chapter 3
 newDate <- 3877.52
@@ -86,8 +89,11 @@ regionsList <- lapply(regionsNames, function(x) {
 })
 names(regionsList) <- regionsNames
 simDate <- newDate
-
+simDate
 regionsList
+
+regionsListJSON <- jsonlite::toJSON(regionsList, pretty = TRUE)
+write(regionsListJSON, file = './political/regionsList.json')
 
 # =========================================================================== #
 #                  Factions Simulator Future Predictions                      #
